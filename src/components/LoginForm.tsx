@@ -1,4 +1,29 @@
+import { useState } from 'react';
+
+const initialFormData = {
+	login: '',
+	password: ''
+}
+
 export const LoginForm = () => {
+	const [formData, setFormData] = useState(initialFormData);
+
+	const handleFieldLogin = (value: string) => {
+		const _formData = structuredClone(formData);
+		_formData.login = value;
+		setFormData(_formData);
+	}
+
+	const handleFieldPassword = (value: string) => {
+		const _formData = structuredClone(formData);
+		_formData.password = value;
+		setFormData(_formData);
+	}
+
+	const handleFormSubmit = () => {
+		console.log(formData);
+	}
+
 	return (
 		<fieldset
 			className="border border-gray-500 p-4 w-full rounded"
@@ -12,6 +37,8 @@ export const LoginForm = () => {
 				<input
 					type="text"
 					autoFocus
+					value={formData.login}
+					onChange = {(e) => handleFieldLogin(e.target.value)}
 					id="login"
 				/>
 			</div>
@@ -22,12 +49,14 @@ export const LoginForm = () => {
 				</label>
 				<input
 					type="password"
+					value={formData.password}
+					onChange = {(e) => handleFieldPassword(e.target.value)}
 					id="password"
 				/>
 			</div>
 
 			<div className="mt-5 flex justify-end pr-3">
-				<button>Time to run!</button>
+				<button onClick={handleFormSubmit}>Time to run!</button>
 			</div>
 		</fieldset>
 	);
