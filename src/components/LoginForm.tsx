@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const initialFormData = {
 	login: "",
@@ -16,6 +16,7 @@ export const LoginForm = () => {
 	const [legend, setLegend] = useState(initialLegend);
 	const [legendColor, setLegendColor] = useState("black");
 	const [errorMessage, setErrorMessage] = useState("");
+	const loginElementRef = useRef(null);
 
 	useEffect(() => {
 		let _legendColor = "";
@@ -35,26 +36,29 @@ export const LoginForm = () => {
 	const handleFieldLogin = (value: string) => {
 		const _formData = structuredClone(formData);
 		_formData.login = value;
-		setErrorMessage('')
+		setErrorMessage("");
 		setFormData(_formData);
 	};
 
 	const handleFieldPassword = (value: string) => {
 		const _formData = structuredClone(formData);
 		_formData.password = value;
-		setErrorMessage('')
+		setErrorMessage("");
 		setFormData(_formData);
 	};
 
 	const handleFormSubmit = () => {
 		if (formData.login != user.login) {
 			setErrorMessage("Login is not correct");
+			if (loginElementRef.current) {
+				(loginElementRef.current as HTMLInputElement).focus();
+			}
 		}
 	};
 
 	return (
 		<fieldset className="border border-gray-500 p-4 w-full rounded">
-			<legend style={{color: legendColor}}>{legend}</legend>
+			<legend style={{ color: legendColor }}>{legend}</legend>
 
 			<div className="mb-4 flex gap-2">
 				<label className="w-[5rem]" htmlFor="login">
@@ -63,6 +67,7 @@ export const LoginForm = () => {
 				<input
 					type="text"
 					autoFocus
+					ref={loginElementRef}
 					value={formData.login}
 					onChange={(e) => handleFieldLogin(e.target.value)}
 					id="login"
