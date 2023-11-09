@@ -21,7 +21,7 @@ export const LoginForm = () => {
 	}
 
 	const handleFormSubmit = () => {
-		console.log(formData);
+		alert(JSON.stringify(formData, null, 2));
 	}
 
 	return (
@@ -36,7 +36,6 @@ export const LoginForm = () => {
 				</label>
 				<input
 					type="text"
-					autoFocus
 					value={formData.login}
 					onChange = {(e) => handleFieldLogin(e.target.value)}
 					id="login"
